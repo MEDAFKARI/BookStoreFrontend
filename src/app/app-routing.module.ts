@@ -14,15 +14,21 @@ import { UpdateBookComponent } from './admin/update-book/update-book.component';
 import { BookOverviewComponent } from './guest/book-overview/book-overview.component';
 import { HomelayoutComponent } from './guest/homelayout/homelayout.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
+import { AuthenticationGuard } from './guards/authentication.guard';
+import { UserListComponent } from './admin/user-list/user-list.component';
+import { PaymentComponent } from './user/payment/payment.component';
+import { CartComponent } from './user/cart/cart.component';
 
 
 const routes: Routes = [
   { path: "", redirectTo:"home", pathMatch:"full"},
 
-  {path:"", component:HomelayoutComponent , children:[
+  {path:"", component:HomelayoutComponent, children:[
     { path: "home", component: HomeComponent},
     { path: "book/:id", component: BookOverviewComponent},
-    { path: "profile", component: ProfileComponent},
+    { path: "profile",canActivate:[AuthenticationGuard], component: ProfileComponent},
+    { path: "payment", canActivate:[AuthenticationGuard],component: PaymentComponent},
+    { path: "cart", canActivate:[AuthenticationGuard], component: CartComponent}
   
   ]},
 
@@ -31,10 +37,11 @@ const routes: Routes = [
   { path: "signup", component: RegisterComponent},
 
 
-  { path: "admin", component:AdminComponent, canActivate:[AuthorizationGuard],  children:[
+  { path: "admin", component:AdminComponent, canActivate:[AuthorizationGuard,AuthenticationGuard],  children:[
     { path: "", component: NewBookComponent},
     { path: "list-of-books", component: BookListComponent},
     { path: "update-book/:id", component: UpdateBookComponent},
+    { path: "user-list", component: UserListComponent}
   ] },
 
   { path: "Unauthorized", component: UnauthorizedComponent},

@@ -7,7 +7,7 @@ export class Book {
     imageUrl:string="";
     releaseDate:Date=new Date();
 
-    constructor(id:number, title:string="",price:number=0.0 ) {
+    constructor(id:number=0, title:string="",price:number=0.0 ) {
         this.id =id;
         this.title=title;
         this.price=price;

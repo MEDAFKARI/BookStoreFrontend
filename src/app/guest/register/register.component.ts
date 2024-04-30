@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { RegisterRequest } from 'src/app/Models/registerRequest.Model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,19 +13,20 @@ export class RegisterComponent implements OnInit{
 
   public registerForm!:FormGroup;
 
-  private registerReq!:RegisterRequest;
-
   private responseToken!:string;
 
-  constructor(private fb:FormBuilder,private authService:AuthService,private route:Router){
+  public ErrorMessage!:string
+
+  constructor(private fb:FormBuilder,private errorHandler:ErrorHandler,private authService:AuthService,private route:Router){
 
   }
   ngOnInit(): void {
     this.registerForm =this.fb.group({
       username: new FormControl("",Validators.required),
       email:new FormControl("",[Validators.required,Validators.email]),
-      password:new FormControl("",[Validators.required])
+      password:new FormControl("",[Validators.required,Validators.minLength(8)])
     })
+    this.errorHandler.handleError(this.registerForm);
   }
 
 
@@ -41,14 +41,11 @@ HandleSubmit() {
         this.route.navigateByUrl('/');
       },
       (error)=>{
-          console.log(error);
+          this.ErrorMessage=error.message;
       }
     );
   }
 }
-
-
-
 
 
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../Models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +17,22 @@ export class AppstateService {
       status:"LOADING",
     }
 
+    UsersState:any={
+      users:[]
+    }
+
     AuthState:any={
-      username:"",
+      user:new User(),
       isAuthenticated:false,
-      role:"",
     }
 
     public setAuthState(state:any){
       this.AuthState={...this.AuthState, ...state}
     }
 
-
+    public setUsers(state:any){
+      this.UsersState={...this.UsersState, ...state}
+    }
 
     public setBookState(state:any){
         this.BookState = {...this.BookState, ...state}

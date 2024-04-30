@@ -29,5 +29,17 @@ export class BookService {
     return this.httpClient.get(`${API_URL}/${Id}`);
   }
 
+  getCartBooks(userId:number):Observable<any>{
+    return this.httpClient.get(`${API_URL}/Cart/${userId}`);
+  }
+
+  addBookToCart(bookId:number,userId:number):Observable<any>{
+    return this.httpClient.post(`${API_URL}/addToCart/${bookId}`,userId);
+  }
+
+  deleteFromCart(bookId:number,userId:number):Observable<any>{
+    return this.httpClient.delete(`${API_URL}/cart/${userId}/${bookId}`);
+  }
+
   
 }

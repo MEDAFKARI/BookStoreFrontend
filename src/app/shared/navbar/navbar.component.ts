@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/Models/user.model';
 import { AppstateService } from 'src/app/services/appstate.service';
 
 @Component({
@@ -8,12 +10,21 @@ import { AppstateService } from 'src/app/services/appstate.service';
 })
 export class NavbarComponent {
 
-  constructor(public appstate:AppstateService){
+  constructor(public appstate:AppstateService,private router:Router){
 
   }
 
   public routes =[
     { Path: 'home', ComponentName: "Home"},
-    { Path: 'admin', ComponentName: "Admin"}
+    { Path:'purchaseHistory', ComponentName:"Purchase"}
   ]
+
+  HandleLogout() {
+    localStorage.removeItem('token');
+    this.appstate.setAuthState({
+      user:new User(),
+      isAuthenticated:false
+    })
+    this.router.navigateByUrl('/login');
+    }
 }

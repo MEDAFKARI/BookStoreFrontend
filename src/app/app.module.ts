@@ -25,6 +25,8 @@ import { UserListComponent } from './admin/user-list/user-list.component';
 import { BookOverviewComponent } from './guest/book-overview/book-overview.component';
 import { HomelayoutComponent } from './guest/homelayout/homelayout.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { PaymentComponent } from './user/payment/payment.component';
+import { CartComponent } from './user/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     UpdateBookComponent,
     UserListComponent,
     BookOverviewComponent,
-    HomelayoutComponent
+    HomelayoutComponent,
+    PaymentComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

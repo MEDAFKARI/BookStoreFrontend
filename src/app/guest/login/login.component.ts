@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Models/user.model';
 import { AppstateService } from 'src/app/services/appstate.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -28,10 +29,9 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.loginForm.value).subscribe(
     (data)=>{
         localStorage.setItem('token',data.token);
-        localStorage.setItem('username',data.username);
-        localStorage.setItem('role',data.role);
         console.log(data.role)
         this.appstate.setAuthState({
+          user: new User(data.id,data.username,data.email,data.role),
           isAuthenticated:true,
         })
         this.route.navigateByUrl('/')
