@@ -17,7 +17,7 @@ export class BookOverviewComponent implements OnInit {
   constructor(private router:Router,
     private route:ActivatedRoute,
     private bookService:BookService,
-    private appService:AppstateService ){
+    public appService:AppstateService ){
   }
 
   ngOnInit(): void {
@@ -29,6 +29,7 @@ export class BookOverviewComponent implements OnInit {
     this.bookService.getBook(this.id).subscribe(
       {
         next:data=>{
+          console.log(data);
           this.book=data;
         },
         error:error=>{
@@ -43,21 +44,22 @@ export class BookOverviewComponent implements OnInit {
     }
 
     HandleAddToCart() {
-      if(this.appService.AuthState.isAuthenticated){
-       this.bookService.addBookToCart(this.book.id,this.appService.AuthState.user.id).subscribe(
-        (data)=>{
-            console.log(data);
-            this.router.navigateByUrl(`/cart`)
-        },
-        (error)=>{
-            console.log(error);
+      const authState = this.appService.AuthState;
+        if(authState.isAuthenticated){
+          this.bookService.addBookToCart(this.book.id, authState.user.id).subscribe(
+            (data) => {
+              console.log(data);
+              this.router.navigateByUrl(`/cart`);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         }
-       )
-      }
-      else(
-        this.router.navigateByUrl(`/login`)
-      )
-  }
-
+        else{
+          this.router.navigateByUrl(`/login`);
+        }
+    }
+    
 
 }

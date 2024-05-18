@@ -27,6 +27,9 @@ import { HomelayoutComponent } from './guest/homelayout/homelayout.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { PaymentComponent } from './user/payment/payment.component';
 import { CartComponent } from './user/cart/cart.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { PurchaseHistoriqueComponent } from './user/purchase-historique/purchase-historique.component';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +50,9 @@ import { CartComponent } from './user/cart/cart.component';
     BookOverviewComponent,
     HomelayoutComponent,
     PaymentComponent,
-    CartComponent
+    CartComponent,
+    FooterComponent,
+    PurchaseHistoriqueComponent
   ],
   imports: [
     BrowserModule,

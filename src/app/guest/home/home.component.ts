@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Book } from 'src/app/Models/book.model';
 import { AppstateService } from 'src/app/services/appstate.service';
 import { BookService } from 'src/app/services/book.service';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,10 @@ export class HomeComponent implements OnInit{
 
   public books:Array<Book> =[]
 
-  constructor(private route:Router,private bookService:BookService,public appstate:AppstateService){
+  constructor(private route:Router,
+    private bookService:BookService,
+    public appstate:AppstateService,
+    public upload:UploadService){
   }
   ngOnInit(): void {
     this.getAllbooks();
@@ -69,4 +73,9 @@ export class HomeComponent implements OnInit{
     })  
     this.getAllbooks();
     }
+
+
+  
+
+
 }

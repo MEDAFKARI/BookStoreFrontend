@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit{
     this.registerForm =this.fb.group({
       username: new FormControl("",Validators.required),
       email:new FormControl("",[Validators.required,Validators.email]),
-      password:new FormControl("",[Validators.required,Validators.minLength(8)])
+      password:new FormControl("",[Validators.required,Validators.minLength(5)])
     })
     this.errorHandler.handleError(this.registerForm);
   }
@@ -35,10 +35,7 @@ HandleSubmit() {
     console.log(this.registerForm.value);
     this.authService.register(this.registerForm.value).subscribe(
       (data)=>{
-        this.responseToken=data.token;
-        console.log(jwtDecode(this.responseToken));
-        localStorage.setItem('token',this.responseToken);
-        this.route.navigateByUrl('/');
+        this.route.navigateByUrl('/login');
       },
       (error)=>{
           this.ErrorMessage=error.message;

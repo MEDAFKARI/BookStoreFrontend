@@ -17,8 +17,30 @@ export class AppstateService {
       status:"LOADING",
     }
 
+    isLoading:Boolean = false;
+
+
+    public LoadingOff(){
+      this.isLoading=false;
+    }
+
+    public LoadingOn(){
+      this.isLoading=true;
+    }
+
     UsersState:any={
-      users:[]
+      users:[],
+      totalPages:0,
+      totalElements:0,
+      offset:0,
+      number:0,
+      pageSize:8,
+      currentPage:0
+    }
+
+    CartState:any={
+      cartId:'',
+      cartPrice:'',
     }
 
     AuthState:any={
@@ -28,6 +50,10 @@ export class AppstateService {
 
     public setAuthState(state:any){
       this.AuthState={...this.AuthState, ...state}
+    }
+
+    public setCartState(state:any){
+      this.CartState={...this.CartState, ...state}
     }
 
     public setUsers(state:any){

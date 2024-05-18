@@ -16,17 +16,26 @@ export class BookService {
     return this.httpClient.post(API_URL,book);
   }
 
+  saveBookWithImage(book: Book): Observable<any> {
+    return this.httpClient.post(`${API_URL}/SaveImage`, book);
+  }
+  
+
   deleteBook(Id: number): Observable<any> {
     return this.httpClient.request('delete', `${API_URL}/${Id}`);
   }
 
 
   getAllBooks(keyword:string ,pageSize:number, currentPage:number):Observable<any>{
-    return this.httpClient.get(`${API_URL}?Search=${keyword}&size=${pageSize}&page=${currentPage}`);
+    return this.httpClient.get(`${API_URL}/getBooks?Search=${keyword}&size=${pageSize}&page=${currentPage}`);
+  }
+
+  updateBook(book:Book, id:number):Observable<any>{
+    return this.httpClient.put(`${API_URL}/updateA/${id}`, book);
   }
 
   getBook(Id:number):Observable<any>{
-    return this.httpClient.get(`${API_URL}/${Id}`);
+    return this.httpClient.get(`${API_URL}/getBooks/${Id}`);
   }
 
   getCartBooks(userId:number):Observable<any>{

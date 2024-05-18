@@ -12,6 +12,7 @@ import { BookService } from 'src/app/services/book.service';
 export class BookListComponent implements OnInit {
 
   public books:Array<Book> =[]
+  kw: any;
 
   constructor(private router:Router, private bookService:BookService,public appstate:AppstateService){
   }
@@ -20,7 +21,7 @@ export class BookListComponent implements OnInit {
   }
 
   getAllbooks(){
-        this.bookService.getAllBooks(this.appstate.BookState.keyword,this.appstate.BookState.pageSize, this.appstate.BookState.currentPage).subscribe(
+        this.bookService.getAllBooks("",this.appstate.BookState.pageSize, this.appstate.BookState.currentPage).subscribe(
           data=>{
             this.books=data.content
             this.appstate.setBookState({
@@ -37,6 +38,27 @@ export class BookListComponent implements OnInit {
               console.log(err.error);
           });        
   }
+
+
+  searchBook(){
+    console.log(this.kw)
+    this.bookService.getAllBooks(this.kw,this.appstate.BookState.pageSize, this.appstate.BookState.currentPage).subscribe(
+      data=>{
+        this.books=data.content
+        this.appstate.setBookState({
+          totalPages:data.totalPages,
+          totalElements:data.totalElements,
+          offset:data.pageable.offset,
+          number:data.numberOfElements,
+          pageSize:data.size,
+          BookList:this.books,
+          status:"LOADED",
+        })
+      },
+      err=>{
+          console.log(err.error);
+      });        
+}
 
 
   HandlePagination(_t33: number) {
@@ -58,6 +80,10 @@ export class BookListComponent implements OnInit {
 
     HandleUpdateBook(id:number) {
       this.router.navigateByUrl(`admin/update-book/${id}`);
+    }
+
+    HandleViewBookPage(id:number) {
+      this.router.navigateByUrl(`book/${id}`);
     }
 
 

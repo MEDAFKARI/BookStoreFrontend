@@ -20,7 +20,7 @@ export class NavbarComponent {
   ]
 
   HandleLogout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.appstate.setAuthState({
       user:new User(),
       isAuthenticated:false

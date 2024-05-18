@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Models/user.model';
 import { AppstateService } from 'src/app/services/appstate.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { SharingServiceService } from 'src/app/services/sharing-service.service';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,18 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   public loginForm!:FormGroup;
 
-  constructor(private fb:FormBuilder, private auth:AuthService,private route:Router,public appstate:AppstateService){
+  error:boolean = false;
+
+  constructor(private fb:FormBuilder, private auth:AuthService,
+    private route:Router,public appstate:AppstateService,
+    private share:SharingServiceService){
   }
 
 
   ngOnInit(): void {
       this.loginForm = this.fb.group({
-        email:'',
-        password:''
+        email:new FormControl("",[Validators.required,Validators.email]),
+       password:new FormControl("",[Validators.required,Validators.minLength(8)])
       })
   }
 
@@ -28,8 +33,8 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value);
     this.auth.login(this.loginForm.value).subscribe(
     (data)=>{
-        localStorage.setItem('token',data.token);
-        console.log(data.role)
+        this.error = false;
+        this.share.setSetting(data);
         this.appstate.setAuthState({
           user: new User(data.id,data.username,data.email,data.role),
           isAuthenticated:true,
@@ -37,6 +42,7 @@ export class LoginComponent implements OnInit {
         this.route.navigateByUrl('/')
     },
     (error)=>{
+        this.error =true;
         console.log(error);
     }
     )

@@ -18,6 +18,7 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { PaymentComponent } from './user/payment/payment.component';
 import { CartComponent } from './user/cart/cart.component';
+import { PurchaseHistoriqueComponent } from './user/purchase-historique/purchase-historique.component';
 
 
 const routes: Routes = [
@@ -27,9 +28,9 @@ const routes: Routes = [
     { path: "home", component: HomeComponent},
     { path: "book/:id", component: BookOverviewComponent},
     { path: "profile",canActivate:[AuthenticationGuard], component: ProfileComponent},
-    { path: "payment", canActivate:[AuthenticationGuard],component: PaymentComponent},
+    { path: "payment" ,canActivate:[AuthenticationGuard],component: PaymentComponent},
+    { path: "purchaseHistory", canActivate:[AuthenticationGuard], component: PurchaseHistoriqueComponent},
     { path: "cart", canActivate:[AuthenticationGuard], component: CartComponent}
-  
   ]},
 
   
@@ -38,8 +39,8 @@ const routes: Routes = [
 
 
   { path: "admin", component:AdminComponent, canActivate:[AuthorizationGuard,AuthenticationGuard],  children:[
-    { path: "", component: NewBookComponent},
-    { path: "list-of-books", component: BookListComponent},
+    { path: "", component: BookListComponent},
+    { path: "new-book", component: NewBookComponent},
     { path: "update-book/:id", component: UpdateBookComponent},
     { path: "user-list", component: UserListComponent}
   ] },

@@ -11,8 +11,9 @@ import { BookService } from 'src/app/services/book.service';
 export class CartComponent implements OnInit {
 
 
-  cart!:Book[]
+  cart:any ={}
   TotalPrice:number =0;
+  books!:Book[]
 
 
   constructor(private bookService:BookService,private appstate:AppstateService){
@@ -23,7 +24,12 @@ export class CartComponent implements OnInit {
     this.bookService.getCartBooks(this.appstate.AuthState.user.id).subscribe(
       (data)=>{
         this.cart=data;
+        this.books = data.books;
+        this.appstate.setCartState({
+          cartId:this.cart.id
+        })
         this.calculatingPrice();
+        console.log(this.appstate.CartState.cartId);
       },
       (error)=>{
         console.log(error);
@@ -33,10 +39,13 @@ export class CartComponent implements OnInit {
 
 
   calculatingPrice(){
-    this.cart.forEach( book=> {
+    this.books.forEach( book=> {
       this.TotalPrice += book.price;
       console.log(this.TotalPrice);
     });
+    this.appstate.setCartState({
+      cartPrice:this.TotalPrice,
+      })
   }
 
 
