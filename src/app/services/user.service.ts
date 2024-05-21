@@ -17,4 +17,12 @@ export class UserService {
     return this.httpClient.get(`${API_URL}`);
   }
 
+  updateEmail(userId:number,email:string){
+    return this.httpClient.put(`${API_URL}/updateEmail/${userId}`,email);
+  }
+
+  deleteUrAccount(userId:number){
+    return this.httpClient.delete(`${API_URL}/delete/${userId}`);
+  }
+
 }

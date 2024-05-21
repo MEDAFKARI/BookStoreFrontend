@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment.development';
 })
 export class NewBookComponent implements OnInit {
 
+
   public BookForm!:FormGroup;
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   file: File | null = null;
@@ -76,7 +77,7 @@ export class NewBookComponent implements OnInit {
                       }
                   )
                 }}
-                this.route.navigateByUrl(`/admin/list-of-books`);
+                this.route.navigateByUrl(`/admin`);
               },
               error:err=>{
                 console.log(err);
@@ -89,6 +90,10 @@ export class NewBookComponent implements OnInit {
     //     console.log(data);
     //   }
     // });
+  }
+
+  handleCancel() {
+    this.route.navigateByUrl(`/admin`);
   }
   
 

@@ -19,6 +19,7 @@ import { UserListComponent } from './admin/user-list/user-list.component';
 import { PaymentComponent } from './user/payment/payment.component';
 import { CartComponent } from './user/cart/cart.component';
 import { PurchaseHistoriqueComponent } from './user/purchase-historique/purchase-historique.component';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
 
 
 const routes: Routes = [
@@ -34,8 +35,8 @@ const routes: Routes = [
   ]},
 
   
-  { path: "login", component: LoginComponent},
-  { path: "signup", component: RegisterComponent},
+  { path: "login", canActivate:[AuthenticatedGuard], component: LoginComponent},
+  { path: "signup", canActivate:[AuthenticatedGuard],component: RegisterComponent},
 
 
   { path: "admin", component:AdminComponent, canActivate:[AuthorizationGuard,AuthenticationGuard],  children:[

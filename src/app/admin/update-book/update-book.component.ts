@@ -12,6 +12,7 @@ import { UploadService } from 'src/app/services/upload.service';
 })
 export class UpdateBookComponent implements OnInit {
 
+
   selectedFile?: File;
   selectedFileName: string ="";
 
@@ -76,7 +77,7 @@ export class UpdateBookComponent implements OnInit {
       this.bookService.updateBook(book,this.bookId).subscribe(
       {
         next:data=>{
-            this.router.navigateByUrl(`/admin/list-of-books`)
+            this.router.navigateByUrl(`/admin`)
         },
         error:err=>{
           console.log(err);
@@ -84,6 +85,10 @@ export class UpdateBookComponent implements OnInit {
       }
       )
     }
+    }
+
+    handleCancel() {
+      this.router.navigateByUrl(`/admin`)
     }
 
 
